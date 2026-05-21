@@ -17,10 +17,9 @@ def heal_failed_pods(failed_pods):
     results = []
 
     for pod in failed_pods:
-        result = restart_pod(pod)
         results.append({
             "pod": pod,
-            "result": result
+            "result": restart_pod(pod)
         })
 
     return results
