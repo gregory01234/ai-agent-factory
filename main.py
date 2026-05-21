@@ -1,6 +1,9 @@
-from planner import create_agent_plan
-from generator import generate_agent
+from spawn_agent import spawn_agent
 
-def spawn_agent(prompt: str):
-    plan = create_agent_plan(prompt)
-    return generate_agent(plan)
+if __name__ == "__main__":
+    prompt = input("Enter agent prompt: ")
+
+    result = spawn_agent(prompt)
+
+    print("\n=== RESULT ===")
+    print(result)
