@@ -1,7 +1,9 @@
+import time
+
 def create_agent_plan(prompt: str):
     return {
-        "name": "dynamic-agent",
+        "name": f"{prompt}-{int(time.time())}",
         "role": prompt,
-        "type": "k8s-pod",
+        "type": "deployment",
         "base_image": "ai-agent-base:latest"
     }
