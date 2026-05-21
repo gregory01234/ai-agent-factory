@@ -1,19 +1,28 @@
 import subprocess
 
-def deploy(path):
-    result = subprocess.run(
-        ["kubectl", "apply", "-f", path],
-        capture_output=True,
-        text=True
-    )
 
-    if result.returncode != 0:
+def deploy(yaml_path: str):
+    try:
+        result = subprocess.check_output(
+            ["kubectl", "apply", "-f", yaml_path],
+            text=True,
+            stderr=subprocess.STDOUT
+        )
+
+        # sprawdź czy kubectl nie zwrócił errorów
+        if "error" in result.lower():
+            return {
+                "success": False,
+                "output": result
+            }
+
         return {
-            "success": False,
-            "error": result.stderr
+            "success": True,
+            "output": result
         }
 
-    return {
-        "success": True,
-        "output": result.stdout
-    }
+    except subprocess.CalledProcessError as e:
+        return {
+            "success": False,
+            "error": e.output
+        }
